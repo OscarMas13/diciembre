@@ -68,7 +68,7 @@ const DIAS = {
     texto:
       "Válido para mañana sábado 5.\n\n" +
       "Mantita, sushi 🍣, recetitas navideñas y todas las películas del tirón.\n\n" +
-      "Que la suerte esté siempre de tu parte 😉",
+      "Planazo, aunque contigo siempre lo son.",
   },
 
   /* ---------- PLANTILLA (copia, pega y cambia el número) ----------
