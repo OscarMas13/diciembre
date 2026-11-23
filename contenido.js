@@ -61,6 +61,16 @@ const DIAS = {
       "Me lo sigo pasando igual de bien desde que tengo el privilegio de estar contigo.",
   },
 
+  4: {
+    emoji: "🍿",
+    titulo: "Plan para mañana",
+    vale: "Maratón de Los Juegos del Hambre en casita 🏹",
+    texto:
+      "Válido para mañana sábado 5.\n\n" +
+      "Mantita, sushi 🍣, recetitas navideñas y todas las películas del tirón.\n\n" +
+      "Que la suerte esté siempre de tu parte 😉",
+  },
+
   /* ---------- PLANTILLA (copia, pega y cambia el número) ----------
 
   4: {
