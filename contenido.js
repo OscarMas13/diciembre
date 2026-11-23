@@ -42,10 +42,14 @@ const DIAS = {
   },
 
   2: {
-    emoji: "🎟️",
-    titulo: "Un vale para ti",
-    vale: "Vale por una cena donde tú elijas",
-    texto: "Canjeable cuando quieras. Sin fecha de caducidad.",
+    emoji: "💍",
+    titulo: "Nuestra canción del futuro",
+    texto:
+      "Hay canciones que te recuerdan a alguien, y luego está esta, " +
+      "que me hace imaginarme contigo dentro de unos años. " +
+      "Me encantaría que fuera la que sonara en nuestra boda.",
+    youtube: "https://www.youtube.com/watch?v=4WTt69YO2VI",
+    enlace: { texto: "▶ Abrir en YouTube", url: "https://www.youtube.com/watch?v=4WTt69YO2VI" },
   },
 
   3: {
