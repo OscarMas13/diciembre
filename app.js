@@ -216,7 +216,10 @@
         el("p", { class: "pregunta", text: d.adivinanza.pregunta }));
       const boton = el("button", { class: "boton", text: "Ver respuesta" });
       boton.addEventListener("click", () => {
-        boton.replaceWith(el("p", { class: "respuesta", text: d.adivinanza.respuesta }));
+        const r = el("div", { class: "respuesta" });
+        if (d.adivinanza.respuesta) r.append(el("p", { text: d.adivinanza.respuesta }));
+        for (const src of [].concat(d.adivinanza.foto || [])) r.append(el("img", { src, alt: "" }));
+        boton.replaceWith(r);
       });
       caja.append(boton);
       c.append(caja);

@@ -510,6 +510,8 @@ main {
   font-size: 1.05rem;
   animation: entrar .4s ease-out;
 }
+.adivinanza .respuesta p { margin: 0 0 12px; }
+.adivinanza .respuesta img { margin: 4px 0 0; }
 
 .boton {
   display: inline-block;

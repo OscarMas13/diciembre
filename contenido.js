@@ -10,7 +10,8 @@
      foto       → "fotos/dia05.jpg"  o varias: ["fotos/a.jpg", "fotos/b.jpg"]
      texto      → mensaje (puedes hacer saltos de línea con \n)
      vale       → texto de un "vale por..." (sale como un ticket)
-     adivinanza → { pregunta: "...", respuesta: "..." }
+     adivinanza → { pregunta: "...", respuesta: "...", foto: "fotos/x.jpg" }
+                  (la foto es opcional y solo sale al pulsar "Ver respuesta")
      spotify    → enlace de compartir de Spotify (canción, álbum o playlist)
      youtube    → enlace de YouTube (normal, youtu.be o shorts)
      video      → "videos/dia10.mp4" (vídeo propio; mejor que pese poco)
