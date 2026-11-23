@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Calendario de Adviento</title>
+  <meta name="theme-color" content="#0b1d1a">
+
+  <!-- iPhone: pantalla completa al añadir a inicio -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Adviento">
+  <link rel="apple-touch-icon" href="iconos/icon-180.png">
+  <link rel="icon" type="image/png" href="iconos/icon-192.png">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Nunito:wght@400;600;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <div class="fondo" aria-hidden="true"></div>
+  <canvas id="nieve" aria-hidden="true"></canvas>
+
+  <div class="guirnalda" aria-hidden="true"></div>
+
+  <main>
+    <header class="cabecera">
+      <h1>Calendario de Adviento</h1>
+      <p class="para" id="para"></p>
+      <p class="estado" id="estado"></p>
+    </header>
+
+    <section class="rejilla" id="rejilla" aria-label="Casillas del calendario"></section>
+
+    <footer class="pie">
+      <p id="progreso"></p>
+      <p id="firma"></p>
+    </footer>
+  </main>
+
+  <div class="modal" id="modal" hidden>
+    <div class="velo" data-cerrar></div>
+    <article class="tarjeta" role="dialog" aria-modal="true" aria-labelledby="titulo-sorpresa">
+      <button class="cerrar" data-cerrar aria-label="Cerrar">✕</button>
+      <div class="contenido" id="contenido"></div>
+    </article>
+  </div>
+
+  <div class="aviso" id="aviso" role="status" aria-live="polite"></div>
+
+  <script src="contenido.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
