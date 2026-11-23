@@ -53,12 +53,12 @@ const DIAS = {
   },
 
   3: {
-    emoji: "🤔",
-    titulo: "Adivinanza",
-    adivinanza: {
-      pregunta: "¿Dónde fue nuestra primera cita?",
-      respuesta: "¡Escribe aquí la respuesta!",
-    },
+    emoji: "📸",
+    titulo: "Nuestra primera foto (en mi móvil)",
+    foto: "fotos/dia03.jpg",
+    texto:
+      "La primera de verdad la tienes tú, pero esta fue la primera que me guardé de los dos.\n\n" +
+      "Y mira qué caras… ya se veía que íbamos a estar igual de locos juntos 😜",
   },
 
   /* ---------- PLANTILLA (copia, pega y cambia el número) ----------
