@@ -45,7 +45,7 @@ const DIAS = {
     emoji: "💍",
     titulo: "Nuestra canción del futuro",
     texto:
-      "Hay canciones que te recuerdan a alguien, y luego está esta, " +
+      "Hay mil canciones que me recuerdan a ti, y luego está esta, " +
       "que me hace imaginarme contigo dentro de unos años. " +
       "Me encantaría que fuera la que sonara en nuestra boda.",
     youtube: "https://www.youtube.com/watch?v=4WTt69YO2VI",
