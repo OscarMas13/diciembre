@@ -71,6 +71,16 @@ const DIAS = {
       "Planazo, aunque contigo siempre lo son.",
   },
 
+  5: {
+    emoji: "⚡",
+    titulo: "¿Quién es ese Pokémon?",
+    texto: "Hoy tu sorpresa no está en el móvil… ¡está en mis manos!",
+    adivinanza: {
+      pregunta: "Pista: es algo que tienes que abrir, puede salir algo brillante ✨ y lo mejor es que son dos.",
+      respuesta: "¡Dos sobres de Pokémon! 🃏 Ven a pedírmelos y los abrimos juntos. Ojalá te salga una buena 🤞",
+    },
+  },
+
   /* ---------- PLANTILLA (copia, pega y cambia el número) ----------
 
   4: {
