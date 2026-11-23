@@ -79,6 +79,7 @@ const DIAS = {
     adivinanza: {
       pregunta: "Pista: es algo que tienes que abrir, puede salir algo brillante ✨ y lo mejor es que son dos.",
       respuesta: "¡Dos sobres de Pokémon! 🃏 Ven a pedírmelos y los abrimos juntos. Ojalá te salga una buena 🤞",
+      foto: "fotos/dia05.jpg",
     },
   },
 
