@@ -58,7 +58,7 @@ const DIAS = {
     foto: "fotos/dia03.jpg",
     texto:
       "La primera de verdad la tienes tú, pero esta fue la primera que me guardé de los dos.\n\n" +
-      "Y mira qué caras… ya se veía que íbamos a estar igual de locos juntos 😜",
+      "Me lo sigo pasando igual de bien desde que tengo el privilegio de estar contigo.",
   },
 
   /* ---------- PLANTILLA (copia, pega y cambia el número) ----------
