@@ -345,6 +345,14 @@
   const rejilla = $("#rejilla");
   ORDEN.forEach((dia, i) => rejilla.append(crearCasilla(dia, i)));
   pintarTextos();
+
+  // Para probar: ?hoy=2026-12-05&abrir=5 abre directamente esa casilla
+  const abrir = parseInt(params.get("abrir"), 10);
+  if (abrir >= 1 && abrir <= TOTAL) {
+    const b = rejilla.querySelector(`[data-dia="${abrir}"]`);
+    if (b) setTimeout(() => pulsar(b, abrir), 600);
+  }
+
   pintarGuirnalda();
   addEventListener("resize", pintarGuirnalda);
   nieve();
