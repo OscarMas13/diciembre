@@ -1,7 +1,7 @@
 // Permite abrir el calendario sin conexión.
 // Siempre intenta descargar lo último (para que veas tus cambios);
 // si no hay internet, usa la copia guardada.
-const CACHE = "adviento-v1";
+const CACHE = "adviento-v2";
 const BASE = [
   "./", "index.html", "estilos.css", "app.js", "contenido.js",
   "manifest.webmanifest", "iconos/icon-180.png", "iconos/icon-192.png", "iconos/icon-512.png",
@@ -22,8 +22,11 @@ self.addEventListener("activate", (e) => {
 self.addEventListener("fetch", (e) => {
   const req = e.request;
   if (req.method !== "GET" || req.headers.has("range")) return;
+  // Los archivos del calendario se piden siempre frescos (sin caché del navegador)
+  const mismo = new URL(req.url).origin === self.location.origin;
+  const peticion = mismo ? fetch(req.url, { cache: "no-cache" }) : fetch(req);
   e.respondWith(
-    fetch(req)
+    peticion
       .then((res) => {
         if (res.ok || res.type === "opaque") {
           const copia = res.clone();

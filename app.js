@@ -355,6 +355,18 @@
   });
 
   if ("serviceWorker" in navigator && location.protocol === "https:") {
-    navigator.serviceWorker.register("sw.js").catch(() => {});
+    // Cuando llega una versión nueva, se recarga sola una vez
+    const habiaVersion = !!navigator.serviceWorker.controller;
+    let recargado = false;
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (habiaVersion && !recargado) { recargado = true; location.reload(); }
+    });
+    navigator.serviceWorker.register("sw.js", { updateViaCache: "none" })
+      .then((reg) => {
+        document.addEventListener("visibilitychange", () => {
+          if (document.visibilityState === "visible") reg.update().catch(() => {});
+        });
+      })
+      .catch(() => {});
   }
 })();
