@@ -23,8 +23,8 @@
    ============================================================ */
 
 const CONFIG = {
-  nombre: "mi amor",        // aparece como "Para mi amor"
-  firma: "tu novio",        // aparece abajo: "Hecho con ❤️ por tu novio"
+  nombre: "mi xiquinina",   // aparece como "Para mi xiquinina"
+  firma: "tu gordito",      // aparece abajo: "Hecho con ❤️ por tu gordito"
   año: 2026,
 };
 
@@ -35,7 +35,7 @@ const DIAS = {
     texto:
       "Bienvenida a tu calendario de adviento.\n\n" +
       "Cada día de aquí a Nochebuena se abre una casilla nueva con una sorpresa. " +
-      "Nada de hacer trampas, ¿eh? 😏\n\n" +
+      "Nada de hacer trampas, ¿eh?\n\n" +
       "Te he hecho este calendario porque se me quedaba muy corto hacerte un regalo de un día, " +
       "y así pienses en mí todos los días, igual que hago yo. " +
       "Espero que lo disfrutes amor, te amoooo! ❤️",
