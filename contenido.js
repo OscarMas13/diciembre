@@ -83,6 +83,14 @@ const DIAS = {
     },
   },
 
+  6: {
+    emoji: "💋",
+    titulo: "No te lo he dicho pero…",
+    texto:
+      "La primera vez que nos dimos un beso no perdí la sonrisa en 3 días.\n\n" +
+      "Bueno, aún me sigue pasando cuando te beso…",
+  },
+
   /* ---------- PLANTILLA (copia, pega y cambia el número) ----------
 
   4: {
