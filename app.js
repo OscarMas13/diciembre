@@ -208,6 +208,8 @@
 
     if (d.texto) c.append(el("p", { class: "texto", text: d.texto }));
 
+    if (d.puzzle) c.append(construirPuzzle(dia, d.puzzle));
+
     if (d.vale) {
       c.append(el("div", { class: "vale" },
         el("small", { text: "Vale por" }),
@@ -263,6 +265,97 @@
     }
 
     return c;
+  }
+
+  // ---------- Puzzle (toca dos piezas para cambiarlas) ----------
+  function construirPuzzle(dia, pz) {
+    const cols = pz.columnas || 3;
+    const filas = pz.filas || 4;
+    const n = cols * filas;
+    const clave = `adviento-${AÑO}-puzzle-${dia}`;
+    let resuelto = false;
+    try { resuelto = localStorage.getItem(clave) === "1"; } catch {}
+
+    const orden = [...Array(n).keys()];
+    if (!resuelto) {
+      do {
+        for (let i = n - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [orden[i], orden[j]] = [orden[j], orden[i]];
+        }
+      } while (orden.filter((p, i) => p === i).length > 1);
+    }
+
+    const tablero = el("div", {
+      class: "puzzle",
+      style: `--cols:${cols};--filas:${filas};aspect-ratio:${cols}/${filas};--foto:url("${pz.foto}")`,
+    });
+    const info = el("p", { class: "puzzle-info" });
+    const pista = el("button", { class: "boton boton-suave", text: "👀 Ver la foto" });
+    const mensaje = el("div", { class: "puzzle-mensaje" });
+    let elegida = null;
+    let movimientos = 0;
+
+    function pintar(pieza, p) {
+      const c = p % cols, f = Math.floor(p / cols);
+      pieza.style.backgroundSize = `${cols * 100}% ${filas * 100}%`;
+      pieza.style.backgroundPosition =
+        `${cols > 1 ? (c / (cols - 1)) * 100 : 0}% ${filas > 1 ? (f / (filas - 1)) * 100 : 0}%`;
+    }
+
+    const piezas = orden.map((p, i) => {
+      const b = el("button", { class: "pieza", "aria-label": `Pieza ${i + 1}` });
+      b.style.backgroundImage = `url("${pz.foto}")`;
+      pintar(b, p);
+      b.addEventListener("click", () => tocar(i));
+      return b;
+    });
+    tablero.append(...piezas);
+
+    function tocar(i) {
+      if (resuelto) return;
+      if (elegida === null) {
+        elegida = i;
+        piezas[i].classList.add("elegida");
+        return;
+      }
+      piezas[elegida].classList.remove("elegida");
+      if (elegida !== i) {
+        [orden[elegida], orden[i]] = [orden[i], orden[elegida]];
+        for (const k of [elegida, i]) {
+          pintar(piezas[k], orden[k]);
+          piezas[k].classList.remove("cambio");
+          void piezas[k].offsetWidth;
+          piezas[k].classList.add("cambio");
+        }
+        movimientos++;
+        info.textContent = `Movimientos: ${movimientos}`;
+        if (orden.every((p, k) => p === k)) completar(true);
+      }
+      elegida = null;
+    }
+
+    function completar(celebrar) {
+      resuelto = true;
+      try { localStorage.setItem(clave, "1"); } catch {}
+      tablero.classList.add("resuelto");
+      pista.remove();
+      info.textContent = celebrar
+        ? `¡Conseguido en ${movimientos} movimientos! 🎉`
+        : "¡Puzzle completado! 🎉";
+      if (pz.mensaje) mensaje.replaceChildren(el("p", { class: "texto", text: pz.mensaje }));
+      if (celebrar) setTimeout(() => destellos(tablero), 350);
+    }
+
+    pista.addEventListener("click", () => {
+      tablero.classList.add("pista");
+      setTimeout(() => tablero.classList.remove("pista"), 1500);
+    });
+
+    info.textContent = "Toca dos piezas para cambiarlas de sitio";
+    const caja = el("div", { class: "puzzle-caja" }, tablero, info, pista, mensaje);
+    if (resuelto) completar(false);
+    return caja;
   }
 
   // ---------- Carta dentro de un sobre ----------

@@ -114,6 +114,18 @@ const DIAS = {
     },
   },
 
+  8: {
+    emoji: "🧩",
+    titulo: "Puzzle sorpresa",
+    texto: "Alguien muy especial quiere decirte algo… pero primero tienes que descubrir quién es.",
+    puzzle: {
+      foto: "fotos/dia08.jpg",
+      columnas: 3,
+      filas: 4,
+      mensaje: "¡Miau! 🐾 Soy yo. Hoy me toca a mí recordarte lo mucho que te queremos en esta casa.",
+    },
+  },
+
   /* ---------- PLANTILLA (copia, pega y cambia el número) ----------
 
   4: {
