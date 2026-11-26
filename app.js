@@ -210,6 +210,8 @@
 
     if (d.puzzle) c.append(construirPuzzle(dia, d.puzzle));
 
+    if (d.ramo) c.append(construirRamo(dia, d.ramo));
+
     if (d.vale) {
       c.append(el("div", { class: "vale" },
         el("small", { text: "Vale por" }),
@@ -356,6 +358,159 @@
     const caja = el("div", { class: "puzzle-caja" }, tablero, info, pista, mensaje);
     if (resuelto) completar(false);
     return caja;
+  }
+
+  // ---------- Ramo de flores (toca los capullos) ----------
+  const SVG = "http://www.w3.org/2000/svg";
+  function svg(tag, attrs = {}, ...hijos) {
+    const n = document.createElementNS(SVG, tag);
+    for (const [k, v] of Object.entries(attrs)) n.setAttribute(k, v);
+    n.append(...hijos);
+    return n;
+  }
+
+  const TIPOS_FLOR = [
+    { capas: [[6, 11, 15, 11, "#e8466b"], [5, 8, 10, 5, "#c22a52"]], centro: [5, "#8e1630"] },  // rosa
+    { capas: [[12, 4.5, 14, 15, "#ffffff"]], centro: [8, "#f4c430"] },                          // margarita
+    { capas: [[5, 12, 14, 12, "#b07ad8"]], centro: [6, "#ffe08a"] },                            // lila
+    { capas: [[8, 7, 14, 13, "#ff8a65"]], centro: [6, "#ffd54f"] },                             // coral
+    { capas: [[6, 10, 15, 12, "#ffd54f"], [6, 6, 9, 6, "#ffb300"]], centro: [5, "#e65100"] },   // amarilla
+    { capas: [[5, 13, 15, 11, "#f8bbd0"], [5, 8, 10, 5, "#f48fb1"]], centro: [5, "#fff59d"] },  // rosa clara
+  ];
+  const SITIOS_FLOR = [[150, 50], [92, 84], [208, 84], [62, 148], [238, 148], [150, 122], [110, 175], [190, 175]];
+
+  function dibujarFlor(tipo) {
+    const g = svg("g", { class: "flor" });
+    tipo.capas.forEach(([n, rx, ry, dist, color], capa) => {
+      for (let i = 0; i < n; i++) {
+        const ang = (360 / n) * i + capa * (180 / n);
+        g.append(svg("ellipse", {
+          cx: 0, cy: -dist, rx, ry, fill: color,
+          stroke: "rgba(0,0,0,.08)", "stroke-width": 1,
+          transform: `rotate(${ang})`,
+        }));
+      }
+    });
+    g.append(svg("circle", { r: tipo.centro[0], fill: tipo.centro[1] }));
+    return g;
+  }
+
+  function lluviaPetalos() {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const colores = ["#e8466b", "#f8bbd0", "#b07ad8", "#ff8a65", "#ffd54f", "#ffffff"];
+    for (let i = 0; i < 36; i++) {
+      const p = el("span", {
+        class: "petalo",
+        style:
+          `left:${Math.random() * 100}vw;background:${colores[i % colores.length]};` +
+          `animation-duration:${3 + Math.random() * 2.5}s;animation-delay:${Math.random() * 1.2}s;` +
+          `--giro:${(Math.random() * 720 - 360) | 0}deg;--x:${(Math.random() * 120 - 60) | 0}px`,
+      });
+      document.body.append(p);
+      setTimeout(() => p.remove(), 7000);
+    }
+  }
+
+  function construirRamo(dia, ramo) {
+    const frases = (ramo.flores || []).slice(0, SITIOS_FLOR.length);
+    const clave = `adviento-${AÑO}-ramo-${dia}`;
+    let completo = false;
+    try { completo = localStorage.getItem(clave) === "1"; } catch {}
+
+    const dibujo = svg("svg", { viewBox: "0 0 300 340", class: "ramo", role: "img", "aria-label": "Ramo de flores" });
+    const base = [150, 300];
+
+    // tallos y hojas
+    const tallos = svg("g");
+    frases.forEach((_, i) => {
+      const [x, y] = SITIOS_FLOR[i];
+      const cx = base[0] + (x - base[0]) * 0.25, cy = (y + base[1]) / 2;
+      tallos.append(svg("path", {
+        d: `M${base[0]},${base[1]} Q${cx},${cy} ${x},${y + 8}`,
+        fill: "none", stroke: "#3f7d3a", "stroke-width": 3, "stroke-linecap": "round",
+      }));
+      if (i % 2 === 0) {
+        const hx = (x + cx) / 2, hy = (y + cy) / 2 + 20;
+        tallos.append(svg("ellipse", {
+          cx: hx, cy: hy, rx: 5, ry: 12, fill: "#5a9e4b",
+          transform: `rotate(${x < 150 ? -40 : 40} ${hx} ${hy})`,
+        }));
+      }
+    });
+    dibujo.append(tallos);
+
+    // flores (capullo + flor abierta)
+    const frase = el("p", { class: "ramo-frase" });
+    const info = el("p", { class: "ramo-info" });
+    const mensaje = el("div", { class: "ramo-mensaje" });
+    let abiertas = 0;
+
+    const flores = frases.map((texto, i) => {
+      const [x, y] = SITIOS_FLOR[i];
+      const capullo = svg("g", { class: "capullo" },
+        svg("ellipse", { cx: 0, cy: 2, rx: 9, ry: 13, fill: "#4f9a46" }),
+        svg("ellipse", { cx: 0, cy: -4, rx: 6, ry: 9, fill: TIPOS_FLOR[i % TIPOS_FLOR.length].capas[0][4] }),
+        svg("ellipse", { cx: 0, cy: 6, rx: 9, ry: 8, fill: "#4f9a46" }),
+      );
+      const flor = dibujarFlor(TIPOS_FLOR[i % TIPOS_FLOR.length]);
+      const zona = svg("circle", { r: 26, fill: "transparent" });
+      const g = svg("g", { class: "flor-sitio", transform: `translate(${x} ${y})`, style: "cursor:pointer" },
+        zona, flor, capullo);
+      g.addEventListener("click", () => {
+        if (g.classList.contains("abierta")) {
+          mostrarFrase(texto);
+          return;
+        }
+        g.classList.add("abierta");
+        abiertas++;
+        mostrarFrase(texto);
+        actualizarInfo();
+        if (abiertas === frases.length) setTimeout(() => terminar(true), 900);
+      });
+      dibujo.append(g);
+      return g;
+    });
+
+    // papel del ramo y lazo
+    dibujo.append(
+      svg("polygon", { points: "78,212 222,212 174,332 126,332", fill: "#f3d9c4" }),
+      svg("polygon", { points: "96,212 204,212 166,332 134,332", fill: "#e9c39f" }),
+      svg("path", { d: "M150,212 L150,332", stroke: "rgba(120,70,30,.15)", "stroke-width": 2 }),
+      svg("ellipse", { cx: 133, cy: 282, rx: 17, ry: 9, fill: "#c62b3e", transform: "rotate(-20 133 282)" }),
+      svg("ellipse", { cx: 167, cy: 282, rx: 17, ry: 9, fill: "#c62b3e", transform: "rotate(20 167 282)" }),
+      svg("path", { d: "M146,288 L136,312 M154,288 L164,312", stroke: "#c62b3e", "stroke-width": 5, "stroke-linecap": "round" }),
+      svg("circle", { cx: 150, cy: 285, r: 7, fill: "#a81f30" }),
+    );
+
+    function mostrarFrase(texto) {
+      frase.textContent = texto;
+      frase.classList.remove("nueva");
+      void frase.offsetWidth;
+      frase.classList.add("nueva");
+    }
+    function actualizarInfo() {
+      info.textContent = completo
+        ? "Toca una flor para volver a leer su frase"
+        : `Toca los capullos para que florezcan 🌷 (${abiertas}/${frases.length})`;
+    }
+    function terminar(celebrar) {
+      completo = true;
+      try { localStorage.setItem(clave, "1"); } catch {}
+      dibujo.classList.add("completo");
+      actualizarInfo();
+      if (ramo.mensaje) mensaje.replaceChildren(el("p", { class: "texto", text: ramo.mensaje }));
+      if (celebrar) lluviaPetalos();
+    }
+
+    if (completo) {
+      flores.forEach((g) => g.classList.add("abierta"));
+      abiertas = frases.length;
+      terminar(false);
+    } else {
+      actualizarInfo();
+    }
+
+    return el("div", { class: "ramo-caja" }, dibujo, frase, info, mensaje);
   }
 
   // ---------- Carta dentro de un sobre ----------

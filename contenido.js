@@ -126,6 +126,25 @@ const DIAS = {
     },
   },
 
+  9: {
+    emoji: "💐",
+    titulo: "Unas flores para ti",
+    ramo: {
+      // una frase por flor (máximo 8)
+      flores: [
+        "Eres preciosa",
+        "Me encanta tu risa",
+        "Gracias por existir",
+        "Contigo todo es mejor",
+        "Eres mi lugar favorito",
+        "Te quiero muchísimo",
+      ],
+      mensaje:
+        "Como no puedo darte flores de verdad todos los días, hoy te las doy así.\n\n" +
+        "Que tengas un día tan bonito como tú. Te quiero ❤️",
+    },
+  },
+
   /* ---------- PLANTILLA (copia, pega y cambia el número) ----------
 
   4: {
