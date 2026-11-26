@@ -122,7 +122,7 @@ const DIAS = {
       foto: "fotos/dia08.jpg",
       columnas: 3,
       filas: 4,
-      mensaje: "¡Miau! 🐾 Soy yo. Hoy me toca a mí recordarte lo mucho que te queremos en esta casa.",
+      mensaje: "Hoy me toca a mí recordarte lo mucho que te queremos.",
     },
   },
 
