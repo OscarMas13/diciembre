@@ -95,7 +95,9 @@
 
   // ---------- Casillas ----------
   function crearCasilla(dia, i) {
-    const estilo = dia === 24 ? "estilo-oro" : `estilo-${i % 4}`;
+    const estilo = dia === 24 ? "estilo-oro"
+      : (DIAS[dia] && DIAS[dia].especial) ? "estilo-corazon"
+      : `estilo-${i % 4}`;
     const b = el("button", {
       class: `casilla ${estilo}${DOBLES.has(dia) ? " doble" : ""}`,
       "data-dia": dia,
@@ -199,6 +201,8 @@
       el("h2", { id: "titulo-sorpresa", text: d.titulo || `Día ${dia}` }),
     );
 
+    if (d.carta) c.append(construirSobre(d.carta));
+
     const fotos = d.foto ? [].concat(d.foto) : [];
     for (const src of fotos) c.append(el("img", { src, alt: "", loading: "lazy" }));
 
@@ -259,6 +263,37 @@
     }
 
     return c;
+  }
+
+  // ---------- Carta dentro de un sobre ----------
+  function construirCarta(carta) {
+    const hoja = el("div", { class: "carta" });
+    if (carta.fecha) hoja.append(el("p", { class: "carta-fecha", text: carta.fecha }));
+    for (const parrafo of String(carta.texto || "").split(/\n\s*\n/)) {
+      hoja.append(el("p", { text: parrafo.trim() }));
+    }
+    if (carta.firma) hoja.append(el("p", { class: "carta-firma", text: `${carta.firma} ❤️` }));
+    return hoja;
+  }
+
+  function construirSobre(carta) {
+    const sobre = el("button", { class: "sobre", "aria-label": "Abrir la carta" },
+      el("div", { class: "sobre-fondo" }),
+      el("div", { class: "sobre-papel" }),
+      el("div", { class: "sobre-frente" }),
+      el("span", { class: "sobre-etiqueta", text: carta.sobre || "" }),
+      el("div", { class: "sobre-solapa" }),
+      el("div", { class: "sobre-sello", text: "♥" }),
+    );
+    const pista = el("p", { class: "sobre-pista", text: "Toca el sobre para abrirlo" });
+    const caja = el("div", { class: "sobre-caja" }, sobre, pista);
+    sobre.addEventListener("click", () => {
+      sobre.classList.add("abierto");
+      pista.remove();
+      const rapido = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      setTimeout(() => caja.replaceWith(construirCarta(carta)), rapido ? 0 : 1800);
+    }, { once: true });
+    return caja;
   }
 
   function mostrarSorpresa(dia) {

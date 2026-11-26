@@ -91,6 +91,29 @@ const DIAS = {
       "Bueno, aún me sigue pasando cuando te beso…",
   },
 
+  7: {
+    emoji: "💌",
+    titulo: "10 meses contigo",
+    especial: true, // la casilla sale con un corazón en el calendario
+    carta: {
+      sobre: "10 meses",
+      fecha: "7 de diciembre de 2026",
+      texto:
+        "No sabía lo que era la verdadera felicidad hasta que tuve la suerte de conocerte. " +
+        "Y no me refiero solo a la sonrisa que me provocas cuando me miras con tus ojos castaños oscuros, " +
+        "en los que soy capaz de ver al niño risueño e inocente que una vez fui.\n\n" +
+        "Me refiero a cómo has sido capaz de hacer que vea la vida con otros ojos. " +
+        "Has conseguido que sea más agradecido con las cosas y que luche por lo que quiero. " +
+        "Gracias a ti soy capaz de ver la vida con alegría, sabiendo que hay cosas maravillosas " +
+        "que me pueden pasar, como conocerte a ti, y eso es algo que no voy a olvidar en la vida.\n\n" +
+        "Y todo esto en tan solo 10 meses, que no es nada de tiempo en comparación con el resto de una vida, " +
+        "que es el tiempo que quiero estar contigo.\n\n" +
+        "Me muero de emoción por ver qué es todo lo que nos depara el tiempo juntos.\n\n" +
+        "Te amo muchísimo, mi xiquinina.",
+      firma: "Tu gordito",
+    },
+  },
+
   /* ---------- PLANTILLA (copia, pega y cambia el número) ----------
 
   4: {
