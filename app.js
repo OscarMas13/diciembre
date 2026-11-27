@@ -34,8 +34,13 @@
   const disponible = (dia) => diasHasta(dia) <= 0;
 
   // ---------- Guardado (qué casillas se han abierto) ----------
+  // ?reset=1 lo deja todo como nuevo: casillas, puzzle, ramo…
   if (params.has("reset")) {
-    try { localStorage.removeItem(CLAVE); } catch {}
+    try {
+      Object.keys(localStorage)
+        .filter((k) => k.startsWith(`adviento-${AÑO}-`))
+        .forEach((k) => localStorage.removeItem(k));
+    } catch {}
   }
   function leerAbiertos() {
     try { return new Set(JSON.parse(localStorage.getItem(CLAVE)) || []); }
